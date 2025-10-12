@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         await client.connect();
-
+        
         const userCollection = client.db("zestora_restaurant_new").collection('users');
         const menuCollection = client.db("zestora_restaurant_new").collection('menus');
         const cartCollection = client.db("zestora_restaurant_new").collection('carts');
@@ -199,7 +199,7 @@ async function run() {
 
 
         // reservation related apis -----------------------------
-        app.post('/reservation' , async (req, res) => {
+        app.post('/reservation', async (req, res) => {
             const userInfo = req.body;
             const result = await reservationCollection.insertOne(userInfo);
             res.send(result);
@@ -229,7 +229,7 @@ async function run() {
             res.send(result);
         })
 
-        app.get('/reservation/:email', verifyToken,async (req, res) => {
+        app.get('/reservation/:email', verifyToken, async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
             const result = await reservationCollection.find(query).toArray();
@@ -268,9 +268,6 @@ async function run() {
             const result = await menuCollection.find(query, option).skip(page * size).limit(size).toArray();
             res.send(result);
         })
-
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally { }
 }
 run().catch(console.dir);
