@@ -1,3 +1,7 @@
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
+
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
@@ -24,7 +28,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         await client.connect();
-        
+
         const userCollection = client.db("zestora_restaurant_new").collection('users');
         const menuCollection = client.db("zestora_restaurant_new").collection('menus');
         const cartCollection = client.db("zestora_restaurant_new").collection('carts');
